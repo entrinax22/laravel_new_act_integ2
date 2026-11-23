@@ -20,6 +20,9 @@ return [
 
     'resend' => [
         'key' => env('RESEND_API_KEY'),
+        'from_email' => env('RESEND_FROM_EMAIL'),
+        'from_name' => env('RESEND_FROM_NAME'),
+        'base_url' => env('RESEND_BASE_URL', 'https://api.resend.com'),
     ],
 
     'ses' => [
@@ -33,6 +36,10 @@ return [
             'bot_user_oauth_token' => env('SLACK_BOT_USER_OAUTH_TOKEN'),
             'channel' => env('SLACK_BOT_USER_DEFAULT_CHANNEL'),
         ],
+    ],
+
+    'dummyjson' => [
+        'base_url' => env('DUMMYJSON_BASE_URL', 'https://dummyjson.com'),
     ],
 
 ];

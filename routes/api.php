@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ExternalAPIController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -58,3 +59,5 @@ Route::get('/sample', function () {
         'message' => 'This is a sample route.',
     ]);
 });
+
+Route::get('/integration/products', [ExternalAPIController::class, 'index'])->name('api.products');
