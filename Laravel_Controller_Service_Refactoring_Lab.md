@@ -6,48 +6,46 @@
 
 ## I. Activity Title
 
-**Controller Refactoring: Separating Business Logic into Service Classes**
+**Complete Controller Refactoring: Separating Business Logic into Service Classes**
 
 ## II. Objectives
 
 At the end of this activity, students should be able to:
 
-1. Identify business logic inside an existing Laravel controller.
-2. Create a service class under the `app/Services` directory.
-3. Transfer appropriate business logic from a controller into a service class.
-4. Use dependency injection to access the service class from a controller.
-5. Test the refactored system and verify that its existing functionality still works.
+1. Examine all controllers in an existing Laravel system.
+2. Identify business logic and determine which responsibilities belong in service classes.
+3. Create and organize service classes under `app/Services`.
+4. Transfer business logic from controllers into the appropriate service classes.
+5. Use dependency injection to access service classes from controllers.
+6. Test the refactored system and verify that its existing functionality still works.
 
 ## III. Problem / Task
 
-Your existing Laravel system may contain controllers that handle several responsibilities, such as retrieving records, saving data, updating information, deleting records, and processing business rules.
+As your Laravel system grows, its controllers may contain several responsibilities, including retrieving records, creating and updating data, deleting records, processing calculations, and implementing business rules.
 
-When too much logic is placed inside a controller, the code becomes difficult to maintain, reuse, and test.
+Placing too much business logic inside controllers makes the application harder to maintain, reuse, and test.
 
-For this activity, you are required to **refactor one existing controller from your own Laravel system by transferring its business logic into a dedicated service class.**
+For this activity, you are required to **refactor all application controllers in your existing Laravel system by transferring their appropriate business logic into dedicated service classes.**
 
-You are not required to create a new system. You must improve the structure of your existing project while preserving its current functionality.
+This is a system-wide refactoring activity. Refactoring only one or two controllers will not satisfy the requirement.
+
+You are not required to build a new system. Improve the organization of your existing project while preserving its current features and behavior.
 
 ## IV. Instructions
 
-### Step 1: Select an Existing Controller
+### Step 1: Identify All Your Controllers
 
-Open your existing Laravel project and select **at least one controller** that contains business logic.
+Open your Laravel project and inspect:
 
-Examples:
+`app/Http/Controllers`
 
-- StudentController
-- ProductController
-- EmployeeController
-- EnrollmentController
-- OrderController
-- InventoryController
+List all controllers that belong to your application. Review each controller and identify the operations and business logic it handles.
 
-Choose a controller that performs operations such as retrieving, creating, updating, or deleting records.
+Do not select only your favorite or easiest controller. The goal is to review and refactor the controllers throughout your system.
 
-### Step 2: Examine the Controller
+### Step 2: Examine Each Controller
 
-Review the selected controller and identify the logic that can be transferred into a service class.
+For every application controller, identify the business logic that should be transferred to a service class.
 
 Examples include:
 
@@ -55,48 +53,86 @@ Examples include:
 - Creating and saving records.
 - Updating existing records.
 - Deleting records.
-- Processing calculations or business rules.
-- Preparing or transforming data.
+- Performing calculations.
+- Applying business rules.
+- Processing or transforming data.
+- Coordinating multiple database operations.
 
-Remember: The controller should primarily handle incoming requests, validation, calling the service, and returning the appropriate response.
+Keep responsibilities such as receiving the HTTP request, validating input, checking authorization, and returning an HTTP response in the controller when appropriate.
 
-### Step 3: Create a Service Class
+**Important:** Do not move code blindly. A service class should contain actual application operations or business logic, not simply duplicate the controller methods.
 
-Inside your Laravel project, create a directory named `Services` under `app`, if it does not already exist.
+### Step 3: Create the Service Classes
 
-Create a service class that corresponds to your selected controller.
+Create a `Services` directory inside `app`, if it does not already exist.
 
-Example:
+Create appropriate service classes for the controllers and their responsibilities.
 
-`app/Services/StudentService.php`
+Example structure:
 
-You may use the following Artisan command:
+```text
+app/
+├── Http/
+│   └── Controllers/
+│       ├── StudentController.php
+│       ├── SubjectController.php
+│       └── EnrollmentController.php
+│
+└── Services/
+    ├── StudentService.php
+    ├── SubjectService.php
+    └── EnrollmentService.php
+```
+
+You may create a service class using Artisan:
 
 ```bash
 php artisan make:class Services/StudentService
 ```
 
-Place the appropriate business logic inside your newly created service class.
+Repeat as needed for the other parts of your system.
 
-### Step 4: Refactor the Controller
+You may organize the services according to your system's actual modules and responsibilities. The example above is only a guide.
 
-Modify your selected controller so that it no longer directly contains the business logic transferred to the service class.
+### Step 4: Transfer the Business Logic
 
-Use **dependency injection** to access your service class.
+Move the appropriate business logic from each controller into its corresponding service class.
+
+For example, if `StudentController` handles student creation, updating, deletion, and retrieval, move the corresponding application operations into `StudentService`.
+
+Make sure that:
+
+- The service class contains the actual operations.
+- The methods are reusable where appropriate.
+- The service does not depend on receiving an HTTP request just to perform its core operation.
+- The original controller no longer contains duplicated copies of the transferred logic.
+
+### Step 5: Refactor Each Controller Using Dependency Injection
+
+Update every application controller to use its corresponding service class through dependency injection.
 
 Example:
 
 ```php
-public function __construct(
-    protected StudentService $studentService
-) {}
+use App\Services\StudentService;
+
+class StudentController extends Controller
+{
+    public function __construct(
+        protected StudentService $studentService
+    ) {}
+
+    // Controller methods call the service here.
+}
 ```
 
-Your controller methods should now call the appropriate service methods instead of containing the transferred logic.
+Your controller methods should call the service methods instead of directly containing the business logic that you transferred.
 
-### Step 5: Test Your Refactored System
+Apply the same approach to the other controllers in your system.
 
-Run your Laravel application and test the affected features.
+### Step 6: Test the Entire System
+
+After refactoring, run your Laravel application and test the features affected by your changes.
 
 Verify that:
 
@@ -104,49 +140,62 @@ Verify that:
 - New records can still be created.
 - Existing records can still be updated.
 - Records can still be deleted.
-- Existing validations and responses still work.
+- Search, filtering, and other existing features still work.
+- Existing validation and authorization behavior is preserved.
+- Related modules and processes still work.
 - No new errors are introduced.
 
-**Important:** Refactoring should improve your code organization without changing the expected behavior of your system.
+**Important:** Refactoring should improve code organization without changing the expected behavior of your system.
 
 ## V. Requirements
 
-Your submission must satisfy the following:
+Your submission must satisfy all of the following:
 
-1. Use an existing Laravel project.
-2. Refactor at least one existing controller.
-3. Create at least one service class inside `app/Services`.
-4. Transfer appropriate business logic from the controller into the service.
-5. Use dependency injection to access the service.
-6. Preserve the existing functionality of the system.
-7. Ensure the affected features work after refactoring.
+1. Use your existing Laravel system.
+2. Review and refactor **all application controllers you developed**.
+3. Create the necessary service classes inside `app/Services`.
+4. Transfer appropriate business logic from the controllers into service classes.
+5. Use dependency injection to access the service classes.
+6. Avoid leaving duplicated business logic in the controllers.
+7. Preserve the existing functionality, validation, authorization, and responses of the system.
+8. Test the affected features after refactoring.
+
+Framework-provided or package-provided controllers that you did not develop do not need to be modified. If a controller has no business logic to extract, document why it does not require a service class.
 
 ## VI. Submission Requirements
 
 Submit the following:
 
-1. **Original Controller** – Screenshot or code showing the controller before refactoring.
-2. **Service Class** – Screenshot or code showing your newly created service class.
-3. **Refactored Controller** – Screenshot or code showing how the controller now uses dependency injection.
-4. **Working System** – Screenshots showing that the affected features still work after refactoring.
-5. **Short Explanation** – In 3–5 sentences, explain what logic you transferred to the service class and how this improved your controller.
+1. **Controller Inventory** – A list of all application controllers in your system and their corresponding service classes.
+2. **Service Classes** – Screenshots or code showing the service classes you created or updated.
+3. **Refactored Controllers** – Screenshots or code showing how each controller uses dependency injection and calls its service.
+4. **Working System** – Screenshots showing that the important features of your system still work after refactoring.
+5. **Short Explanation** – Explain what responsibilities you transferred to the service classes and how the changes improved your system.
+
+Your submission must demonstrate the refactoring of the entire application, not just a single controller.
 
 ## VII. Guide Questions
 
 Answer briefly:
 
 1. What is the purpose of a service class in Laravel?
-2. Why should business logic not be placed entirely inside a controller?
-3. What is dependency injection, and how did you use it in this activity?
-4. What is the main difference between your original controller and your refactored controller?
+2. Why should business logic not be placed entirely inside controllers?
+3. What is dependency injection, and how did you use it in your system?
+4. What responsibilities should remain in a controller?
+5. How did refactoring all your application controllers improve the organization and maintainability of your system?
+6. What difficulties did you encounter while transferring logic into service classes?
 
 ## VIII. Important Reminders
 
-- Do not create a separate demonstration project. Use your existing system.
-- Do not simply create an empty service class. It must contain actual business logic transferred from your controller.
+- Use your existing Laravel project. Do not create a separate demonstration project.
+- Refactor all application controllers you developed.
+- Do not simply create empty service classes. They must contain actual business logic transferred from the controllers.
+- Do not create unnecessary service classes just to meet a file-count requirement.
 - Do not remove existing features or change their expected behavior.
+- Do not move request validation, authorization, or HTTP response handling blindly into services.
 - Keep your code organized and follow proper Laravel naming conventions.
-- Make sure your application runs before and after refactoring.
+- Make sure your application works before and after refactoring.
+- Test the related modules after making changes. A change in one service may affect other parts of your system.
 
 ## IX. Grading Rubric
 
@@ -154,10 +203,10 @@ Answer briefly:
 
 | Criteria | Points |
 |---|---:|
-| Correct identification of controller logic | 15 |
-| Proper creation and implementation of service class | 25 |
-| Correct use of dependency injection | 20 |
-| Controller successfully refactored | 15 |
-| Existing system functionality preserved and tested | 15 |
-| Submission and explanation | 10 |
+| Complete review and inventory of all application controllers | 10 |
+| Appropriate service class design and organization | 20 |
+| Successful transfer of business logic across the controllers | 25 |
+| Correct use of dependency injection and controller refactoring | 15 |
+| Existing system functionality preserved and tested | 20 |
+| Submission completeness and explanation | 10 |
 | **Total** | **100** |
