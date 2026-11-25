@@ -162,17 +162,74 @@ Your submission must satisfy all of the following:
 
 Framework-provided or package-provided controllers that you did not develop do not need to be modified. If a controller has no business logic to extract, document why it does not require a service class.
 
-## VI. Submission Requirements
+## VI. Submission and System Checking
 
-Submit the following:
+Each group must prepare their system for an individual checking and submit a printed documentation sheet.
 
-1. **Controller Inventory** – A list of all application controllers in your system and their corresponding service classes.
-2. **Service Classes** – Screenshots or code showing the service classes you created or updated.
-3. **Refactored Controllers** – Screenshots or code showing how each controller uses dependency injection and calls its service.
-4. **Working System** – Screenshots showing that the important features of your system still work after refactoring.
-5. **Short Explanation** – Explain what responsibilities you transferred to the service classes and how the changes improved your system.
+### A. Actual System Demonstration
 
-Your submission must demonstrate the refactoring of the entire application, not just a single controller.
+Each group must present their existing Laravel system for checking.
+
+The instructor will check each group's system **one group at a time**.
+
+During the checking, the group must demonstrate:
+
+1. All application controllers have been reviewed and refactored.
+2. Appropriate business logic has been transferred into service classes.
+3. Service classes are properly organized inside `app/Services`.
+4. Controllers use dependency injection to access their corresponding services.
+5. The system's existing features still work after refactoring.
+6. The instructor can inspect the actual controller and service class implementations.
+
+**Important:** All group members must be present during the checking and should be able to explain their implementation.
+
+### B. Printed Documentation
+
+Each group must submit **one printed copy per group**, using A4-size bond paper.
+
+The printed documentation must contain the following:
+
+**1. Group Information**
+- Group Number
+- Names of Group Members
+- Name of the Laravel System
+- Section
+
+**2. Controller Inventory**
+
+List all application controllers in your system and their corresponding service classes.
+
+| Controller Name | Corresponding Service Class | Refactored? |
+|---|---|---|
+| StudentController | StudentService | Yes |
+| ProductController | ProductService | Yes |
+| OrderController | OrderService | Yes |
+
+*Use your actual controller and service class names. The table above is only an example.*
+
+**3. Guide Questions**
+
+Answer the following questions briefly but clearly:
+
+1. What is the purpose of a service class in Laravel?
+2. Why should business logic not be placed entirely inside a controller?
+3. What is dependency injection, and how did your group use it in this activity?
+4. What changes did your group make to the controllers after refactoring?
+5. What challenges did your group encounter during the refactoring process, and how did you resolve them?
+6. How did your group verify that the system still works after refactoring?
+
+**4. Group Reflection**
+
+In one short paragraph, explain how separating business logic into service classes improved the organization and maintainability of your Laravel system.
+
+### C. Submission Reminders
+
+- Submit only **one printed documentation sheet per group**.
+- Use A4-size bond paper.
+- Make sure all answers are readable and complete.
+- The printed documentation must be prepared before your group's scheduled system checking.
+- The actual Laravel system must be accessible and ready for demonstration.
+- The instructor will inspect the implementation directly. Printed answers alone will not be sufficient for completion of the activity.
 
 ## VII. Guide Questions
 
