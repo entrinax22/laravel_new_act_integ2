@@ -231,18 +231,7 @@ In one short paragraph, explain how separating business logic into service class
 - The actual Laravel system must be accessible and ready for demonstration.
 - The instructor will inspect the implementation directly. Printed answers alone will not be sufficient for completion of the activity.
 
-## VII. Guide Questions
-
-Answer briefly:
-
-1. What is the purpose of a service class in Laravel?
-2. Why should business logic not be placed entirely inside controllers?
-3. What is dependency injection, and how did you use it in your system?
-4. What responsibilities should remain in a controller?
-5. How did refactoring all your application controllers improve the organization and maintainability of your system?
-6. What difficulties did you encounter while transferring logic into service classes?
-
-## VIII. Important Reminders
+## VII. Important Reminders
 
 - Use your existing Laravel project. Do not create a separate demonstration project.
 - Refactor all application controllers you developed.
@@ -254,7 +243,7 @@ Answer briefly:
 - Make sure your application works before and after refactoring.
 - Test the related modules after making changes. A change in one service may affect other parts of your system.
 
-## IX. Grading Rubric
+## VIII. Grading Rubric
 
 **Total: 100 Points**
 
